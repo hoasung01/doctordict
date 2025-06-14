@@ -1,0 +1,46 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-8">Search Results</h1>
+
+  <div class="mb-8">
+    <%= form_tag search_dictionaries_path, method: :get, class: "flex gap-4" do %>
+      <div class="flex-1">
+        <%= text_field_tag :query, params[:query],
+            class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500",
+            placeholder: "Search medical terms..." %>
+      </div>
+      <div>
+        <%= select_tag :language,
+            options_for_select([['All', ''], ['Vietnamese', 'vi'], ['English', 'en']], params[:language]),
+            class: "px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+      <%= submit_tag "Search",
+          class: "px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+    <% end %>
+  </div>
+
+  <% if @dictionaries.any? %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @dictionaries.each do |dictionary| %>
+        <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+          <h2 class="text-xl font-semibold mb-2"><%= dictionary.word %></h2>
+          <% if dictionary.pronunciation.present? %>
+            <p class="text-gray-600 mb-2">[<%= dictionary.pronunciation %>]</p>
+          <% end %>
+          <p class="text-gray-700 mb-4"><%= dictionary.meaning %></p>
+          <span class="inline-block px-3 py-1 text-sm rounded-full <%= dictionary.language == 'vi' ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' %>">
+            <%= dictionary.language == 'vi' ? 'Vietnamese' : 'English' %>
+          </span>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-12">
+      <p class="text-gray-500 text-lg">No results found for your search.</p>
+    </div>
+  <% end %>
+
+  <div class="mt-8">
+    <%= link_to "Back to Dictionary", dictionaries_path,
+        class: "inline-block px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500" %>
+  </div>
+</div>
