@@ -85,7 +85,7 @@ production:
     username: <%= ENV["POSTGRES_USER"] %>
     password: <%= ENV["POSTGRES_PASSWORD"] %>
     host: <%= ENV["POSTGRES_DB_HOST"] %>
-    port: <%= ENV["POSTGRES_PORT"] %>
+    port: 5432
   cache:
     <<: *primary_production
     database: doctordict_production_cache
