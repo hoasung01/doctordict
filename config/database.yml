@@ -81,9 +81,11 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: doctordict_production
-    username: doctordict
-    password: <%= ENV["DOCTORDICT_DATABASE_PASSWORD"] %>
+    database: <%= ENV["POSTGRES_DB_NAME"] %>
+    username: <%= ENV["POSTGRES_USER"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
+    host: <%= ENV["POSTGRES_DB_HOST"] %>
+    port: <%= ENV["POSTGRES_PORT"] %>
   cache:
     <<: *primary_production
     database: doctordict_production_cache
